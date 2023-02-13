@@ -11,7 +11,7 @@ export default function App() {
     bad: 0,
   });
 
-  function updateFeedbackState (el) {
+  function updateFeedbackState(el) {
     setFeedback(prevState => ({ ...prevState, [el]: prevState[el] + 1 }));
   }
 
@@ -25,28 +25,27 @@ export default function App() {
     return Math.round((feedback.good / getTotalFeedback()) * 100);
   }
 
-    return (
-      <>
-        <Section title="Please leave feedback">
-          <FeedbackOptions
-            options={Object.keys(feedback)}
-            onLeaveFeedback={updateFeedbackState}
+  return (
+    <>
+      <Section title="Please leave feedback">
+        <FeedbackOptions
+          options={Object.keys(feedback)}
+          onLeaveFeedback={updateFeedbackState}
+        />
+      </Section>
+      <Section title="Statistics">
+        {getTotalFeedback ? (
+          <Statistic
+            good={feedback.good}
+            neutral={feedback.neutral}
+            bad={feedback.bad}
+            total={getTotalFeedback}
+            positivePercentage={getPositiveFeedbackPercentage()}
           />
-        </Section>
-        <Section title="Statistics">
-          {getTotalFeedback ? (
-            <Statistic
-              good={feedback.good}
-              neutral={feedback.neutral}
-              bad={feedback.bad}
-              total={getTotalFeedback}
-              positivePercentage={getPositiveFeedbackPercentage()}
-            />
-          ) : (
-            <Notification message={'There is no feedback'} />
-          )}
-        </Section>
-      </>
-    );
-  }
-
+        ) : (
+          <Notification message={'There is no feedback'} />
+        )}
+      </Section>
+    </>
+  );
+}
